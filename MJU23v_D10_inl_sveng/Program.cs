@@ -29,6 +29,12 @@
                 }
             }
         }
+        static void DeleteWord(string swedish, string english)
+        {
+            int index = dictionary.FindIndex(gloss => gloss.word_swe == swedish && gloss.word_eng == english);
+            if (index != -1)
+                dictionary.RemoveAt(index);
+        }
         static void Main(string[] args)
         {
             dictionary = new List<SweEngGloss>();
@@ -74,14 +80,7 @@
                 {
                     if (argument.Length == 3)
                     {
-                        int index = -1;
-                        for (int i = 0; i < dictionary.Count; i++)
-                        {
-                            SweEngGloss gloss = dictionary[i];
-                            if (gloss.word_swe == argument[1] && gloss.word_eng == argument[2])
-                                index = i;
-                        }
-                        dictionary.RemoveAt(index);
+                        DeleteWord(argument[1], argument[2]);
                     }
                     else if (argument.Length == 1)
                     {
@@ -89,14 +88,7 @@
                         string swedish = Console.ReadLine();
                         Console.Write("Write word in English: ");
                         string english = Console.ReadLine();
-                        int index = -1;
-                        for (int i = 0; i < dictionary.Count; i++)
-                        {
-                            SweEngGloss gloss = dictionary[i];
-                            if (gloss.word_swe == swedish && gloss.word_eng == english)
-                                index = i;
-                        }
-                        dictionary.RemoveAt(index);
+                        DeleteWord(swedish, english);
                     }
                 }
                 else if (command == "translate")
