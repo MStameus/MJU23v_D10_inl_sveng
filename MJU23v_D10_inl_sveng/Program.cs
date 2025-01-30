@@ -16,7 +16,18 @@
                 this.word_swe = words[0]; this.word_eng = words[1];
             }
         }
-        
+        static void LoadDictionary(string filepath)
+        {
+            using (StreamReader sr = new StreamReader(filepath))
+            {
+                dictionary = new List<SweEngGloss>(); // Empty it!
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    dictionary.Add(new SweEngGloss(line));
+                }
+            }
+        }
         static void Main(string[] args)
         {
             dictionary = new List<SweEngGloss>();
@@ -33,34 +44,8 @@
                 }
                 else if (command == "load")
                 {
-                    if (argument.Length == 2)
-                    {
-                        using (StreamReader sr = new StreamReader(argument[1]))
-                        {
-                            dictionary = new List<SweEngGloss>(); // Empty it!
-                            string line = sr.ReadLine();
-                            while (line != null)
-                            {
-                                SweEngGloss gloss = new SweEngGloss(line);
-                                dictionary.Add(gloss);
-                                line = sr.ReadLine();
-                            }
-                        }
-                    }
-                    else if (argument.Length == 1)
-                    {
-                        using (StreamReader sr = new StreamReader(defaultFile))
-                        {
-                            dictionary = new List<SweEngGloss>(); // Empty it!
-                            string line = sr.ReadLine();
-                            while (line != null)
-                            {
-                                SweEngGloss gloss = new SweEngGloss(line);
-                                dictionary.Add(gloss);
-                                line = sr.ReadLine();
-                            }
-                        }
-                    }
+                    string filepath = argument.Length == 2 ? argument[1] : defaultFile;
+                    LoadDictionary(filepath);
                 }
                 else if (command == "list") //FIXME nullreference exception when inputting "list" and lsit is empty
                 {
