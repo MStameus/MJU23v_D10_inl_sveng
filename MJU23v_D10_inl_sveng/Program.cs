@@ -72,7 +72,7 @@ namespace MJU23v_D10_inl_sveng
                     string filepath = argument.Length == 2 ? "..\\..\\..\\dict\\" +argument[1] : defaultFile;
                     LoadDictionary(filepath);
                 }
-                else if (command == "list")  //FIXME when no list initiated gives nullreferenceexeption
+                else if (command == "list")  
                 {
                     try
                     {
@@ -83,14 +83,22 @@ namespace MJU23v_D10_inl_sveng
                     }
                     catch (NullReferenceException)
                     {
-                        Console.WriteLine("Error: Seems no dictionary loaded. Please load or add words first.");
+                        Console.WriteLine("Error: Seems no dictionary loaded. Please load one first.");
                     }
                 }
                 else if (command == "new") //FIXME no list loaded gives nullreferencexeption
                 {
                     if (argument.Length == 3)
                     {
-                        dictionary.Add(new SweEngGloss(argument[1], argument[2]));
+                        try
+                        {
+                            dictionary.Add(new SweEngGloss(argument[1], argument[2]));
+                        }
+                        catch (NullReferenceException)
+                        {
+                            Console.WriteLine("Error: Seems no dictionary loaded. Please load one first.");
+                        }
+                        
                     }
                     else if (argument.Length == 1)
                     {
@@ -98,7 +106,15 @@ namespace MJU23v_D10_inl_sveng
                         string swedish = Console.ReadLine();
                         Console.Write("Write word in English: ");
                         string english = Console.ReadLine();
-                        dictionary.Add(new SweEngGloss(swedish, english));
+                        try 
+                        {
+                            dictionary.Add(new SweEngGloss(swedish, english));
+                        }
+                        catch(NullReferenceException)
+                        {
+                            Console.WriteLine("Error: Seems no dictionary loaded. Please load one first.");
+                        }
+                        
                     }
                 }
                 else if (command == "delete") //FIXME give some feedback when nothing is deleted due to for example typo
