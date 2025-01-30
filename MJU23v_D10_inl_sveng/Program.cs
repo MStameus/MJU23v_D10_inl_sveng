@@ -18,6 +18,7 @@
         }
         static void LoadDictionary(string filepath)
         {
+            
             using (StreamReader sr = new StreamReader(filepath))
             {
                 dictionary = new List<SweEngGloss>(); // Empty it!
@@ -44,7 +45,7 @@
                 }
                 else if (command == "load")
                 {
-                    string filepath = argument.Length == 2 ? argument[1] : defaultFile;
+                    string filepath = argument.Length == 2 ? "..\\..\\..\\dict\\" +argument[1] : defaultFile;
                     LoadDictionary(filepath);
                 }
                 else if (command == "list") //FIXME nullreference exception when inputting "list" and lsit is empty
