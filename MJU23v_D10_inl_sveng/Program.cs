@@ -42,7 +42,15 @@ namespace MJU23v_D10_inl_sveng
         {
             int index = dictionary.FindIndex(gloss => gloss.word_swe == swedish && gloss.word_eng == english);
             if (index != -1)
+            {
                 dictionary.RemoveAt(index);
+                Console.WriteLine($"Successfully deleted '{swedish} - {english}' from the dictionary.");
+            }
+            else
+            {
+                Console.WriteLine($"Error: The word '{swedish} - {english}' was not found in the dictionary.");
+                Console.WriteLine("Please check the spelling and try again.");
+            }
         }
         static void TranslateWord(string inputword)
         {
@@ -86,7 +94,7 @@ namespace MJU23v_D10_inl_sveng
                         Console.WriteLine("Error: Seems no dictionary loaded. Please load one first.");
                     }
                 }
-                else if (command == "new") //FIXME no list loaded gives nullreferencexeption
+                else if (command == "new") 
                 {
                     if (argument.Length == 3)
                     {
