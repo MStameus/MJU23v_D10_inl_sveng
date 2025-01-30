@@ -1,4 +1,6 @@
-﻿namespace MJU23v_D10_inl_sveng
+﻿using System.Linq.Expressions;
+
+namespace MJU23v_D10_inl_sveng
 {
     internal class Program
     {
@@ -18,15 +20,22 @@
         }
         static void LoadDictionary(string filepath)
         {
-            
-            using (StreamReader sr = new StreamReader(filepath))
+            try
             {
-                dictionary = new List<SweEngGloss>(); // Empty it!
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                using (StreamReader sr = new StreamReader(filepath))
                 {
-                    dictionary.Add(new SweEngGloss(line));
+                    dictionary = new List<SweEngGloss>(); // Empty it!
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        dictionary.Add(new SweEngGloss(line));
+                    }
                 }
+                
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"Error: The file '{filepath}' was not found.");
             }
         }
         static void DeleteWord(string swedish, string english)
@@ -59,7 +68,7 @@
                 {
                     Console.WriteLine("Goodbye!");
                 }
-                else if (command == "load")
+                else if (command == "load") //fixme when giving non existing fiel gets filenotfoundexception
                 {
                     string filepath = argument.Length == 2 ? "..\\..\\..\\dict\\" +argument[1] : defaultFile;
                     LoadDictionary(filepath);
@@ -86,7 +95,7 @@
                         dictionary.Add(new SweEngGloss(swedish, english));
                     }
                 }
-                else if (command == "delete")
+                else if (command == "delete") 
                 {
                     if (argument.Length == 3)
                     {
