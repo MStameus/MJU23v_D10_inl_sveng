@@ -76,10 +76,10 @@
                     else if (argument.Length == 1)
                     {
                         Console.WriteLine("Write word in Swedish: ");
-                        string s = Console.ReadLine();
+                        string swedish = Console.ReadLine();
                         Console.Write("Write word in English: ");
-                        string e = Console.ReadLine();
-                        dictionary.Add(new SweEngGloss(s, e));
+                        string english = Console.ReadLine();
+                        dictionary.Add(new SweEngGloss(swedish, english));
                     }
                 }
                 else if (command == "delete")
