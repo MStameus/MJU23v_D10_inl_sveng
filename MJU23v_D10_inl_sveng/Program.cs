@@ -56,7 +56,6 @@ namespace MJU23v_D10_inl_sveng
         }
         static void Main(string[] args)
         {
-            dictionary = new List<SweEngGloss>();
             string defaultFile = "..\\..\\..\\dict\\sweeng.lis";
             Console.WriteLine("Welcome to the dictionary app!");
             do
@@ -68,19 +67,26 @@ namespace MJU23v_D10_inl_sveng
                 {
                     Console.WriteLine("Goodbye!");
                 }
-                else if (command == "load") //fixme when giving non existing fiel gets filenotfoundexception
+                else if (command == "load") 
                 {
                     string filepath = argument.Length == 2 ? "..\\..\\..\\dict\\" +argument[1] : defaultFile;
                     LoadDictionary(filepath);
                 }
-                else if (command == "list") 
+                else if (command == "list")  //FIXME when no list initiated gives nullreferenceexeption
                 {
-                    foreach (SweEngGloss gloss in dictionary)
+                    try
                     {
-                        Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}");
+                        foreach (SweEngGloss gloss in dictionary)
+                        {
+                            Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}");
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Console.WriteLine("Error: Seems no dictionary loaded. Please load or add words first.");
                     }
                 }
-                else if (command == "new")
+                else if (command == "new") //FIXME no list loaded gives nullreferencexeption
                 {
                     if (argument.Length == 3)
                     {
@@ -95,7 +101,7 @@ namespace MJU23v_D10_inl_sveng
                         dictionary.Add(new SweEngGloss(swedish, english));
                     }
                 }
-                else if (command == "delete") 
+                else if (command == "delete") //FIXME give some feedback when nothing is deleted due to for example typo
                 {
                     if (argument.Length == 3)
                     {
