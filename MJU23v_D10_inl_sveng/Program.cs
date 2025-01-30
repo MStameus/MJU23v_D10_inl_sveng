@@ -16,8 +16,10 @@
                 this.word_swe = words[0]; this.word_eng = words[1];
             }
         }
+        
         static void Main(string[] args)
         {
+            dictionary = new List<SweEngGloss>();
             string defaultFile = "..\\..\\..\\dict\\sweeng.lis";
             Console.WriteLine("Welcome to the dictionary app!");
             do
